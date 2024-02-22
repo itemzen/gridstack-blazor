@@ -1,0 +1,22 @@
+.page {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    gap: 10px;
+    padding: 18px;
+}
+
+.dashboard-wrapper {
+    padding: 0 18px 18px 18px;
+    overflow-y: auto;
+}
+
+.dashboard {
+    background-color: lightgrey;
+}

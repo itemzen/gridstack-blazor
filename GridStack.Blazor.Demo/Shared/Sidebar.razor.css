@@ -1,0 +1,21 @@
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: 4px 0 2px -2px #888;
+    padding: 0 18px;
+    overflow-y: auto;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 0;
+}
+
+.sidebar button {
+    width: 100%;
+    padding: 5px 0;
+    cursor: pointer;
+}

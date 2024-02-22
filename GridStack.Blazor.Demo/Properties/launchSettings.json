@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "Debug": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "hotReloadEnabled": true,
+      "hotReloadProfile": "aspnetcore",
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "applicationUrl": "https://localhost:6001;http://localhost:6000"
+    },
+    "Watch": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "workingDirectory": "$(ProjectDir)",
+      "commandLineArgs": "watch run debug --launch-profile Debug"
+    }
+  }
+}

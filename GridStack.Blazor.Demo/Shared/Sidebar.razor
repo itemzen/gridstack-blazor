@@ -1,0 +1,15 @@
+<div class="sidebar">
+    <div class="nav">
+        <button @onclick="@OnDemo1">Demo 1</button>
+    </div>
+</div>
+
+@code {
+
+    [Inject] NavigationManager NavManager { get; set; } = null!;
+
+    private void OnDemo1()
+    {
+        NavManager.NavigateTo("/");
+    }
+}

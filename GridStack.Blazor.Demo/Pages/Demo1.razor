@@ -1,0 +1,45 @@
+﻿@page "/"
+
+<div class="page">
+
+    <div class="header">
+        <button onclick="@AddElementClicked">Add Element</button>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <div class="dashboard">
+
+            I am the dashboard
+            
+            <Dashboard
+                @ref="@_dashboard"
+                Options="@_dashboardOptions">
+                <Widget>Widget 1</Widget>
+                <Widget>Widget 2</Widget>
+            </Dashboard>
+
+        </div>
+        </div>
+
+</div>
+
+@code{
+
+    private Dashboard _dashboard;
+
+    private readonly DashboardOptions _dashboardOptions = new()
+    {
+        AlwaysShowResizeHandle = false,
+        Animate = true,
+        //CellHeight = "20px"
+        //Column = 6
+        DisableDrag = false,
+        DisableResize = true
+    };
+
+    private async Task AddElementClicked()
+    {
+        await _dashboard.AddWidget();
+    }
+
+}
