@@ -5,6 +5,7 @@
         <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <VersionPrefix>10.1.0</VersionPrefix>
         <Authors>Itemzen</Authors>
         <Copyright>2024 by Itemzen</Copyright>
         <PackageId>GridStack.Blazor</PackageId>
@@ -25,9 +26,11 @@
     <ItemGroup>
         <None Include="..\LICENSE" Link="LICENSE">
             <Pack>True</Pack>
+            <PackagePath></PackagePath>
         </None>
         <None Include="..\README.md" Link="README.md">
             <Pack>True</Pack>
+            <PackagePath></PackagePath>
         </None>
     </ItemGroup>
 

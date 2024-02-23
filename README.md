@@ -10,6 +10,10 @@ Blazor wrapper for the [gridstack.js](https://gridstackjs.com/) library, heavily
 dotnet add package GridStack.Blazor
 ```
 
+The version of the nuget package matches the gridstack version against which the wrapper was created,
+including a version suffix indicating the wrapper release number. For example, `v10.1.0-r2` indicates the
+second release of the wrapper for version `10.1.0` of the gridstack library.
+
 ### index.html
 
 Download the gridstack files from npm
@@ -61,3 +65,7 @@ The wrapper adds two components: `GsGrid` and `GsWrapper`.
 ```
 
 The demo project contains additional details.
+
+## Acknowledgements
+
+Brought to you by the [itemzen](https://itemzen.com) team.
