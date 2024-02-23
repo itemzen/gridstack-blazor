@@ -10,6 +10,13 @@ h1:focus {
     outline: none;
 }
 
+.grid-stack-item-content {
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    overflow: hidden !important;
+}
+
 /* ---- Blazor forms and validation ---- */
 /* https://docs.microsoft.com/en-us/aspnet/core/blazor/forms-validation?view=aspnetcore-6.0#custom-validation-css-class-attributes */
 .valid.modified:not([type=checkbox]) {

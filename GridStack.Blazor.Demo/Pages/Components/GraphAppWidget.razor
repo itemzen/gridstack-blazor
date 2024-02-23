@@ -1,0 +1,54 @@
+<div class="container">
+    <ApexChart TItem="MyData"
+               Height="@("100%")"
+               Options="@_options"
+               Title="Q1 Report">
+
+        <ApexPointSeries TItem="MyData"
+                         Items="_data"
+                         Name="Net Profit"
+                         SeriesType="SeriesType.Bar"
+                         XValue="e => e.Category"
+                         YValue="e => e.NetProfit"/>
+
+        <ApexPointSeries TItem="MyData"
+                         Items="_data"
+                         Name="Revenue"
+                         SeriesType="SeriesType.Bar"
+                         XValue="e => e.Category"
+                         YValue="e => e.Revenue"/>
+    </ApexChart>
+</div>
+
+@code{
+    
+    private List<MyData> _data = new();
+    private ApexChartOptions<MyData> _options = new();
+    
+    protected override void OnInitialized()
+    {
+        _options = new ApexChartOptions<MyData>
+        {
+            Chart = new Chart
+            {
+                Toolbar = new Toolbar
+                {
+                    Show = false
+                }
+            }
+        };
+        
+        _data.Add(new MyData { Category = "Jan", NetProfit = 12, Revenue = 33 });
+        _data.Add(new MyData { Category = "Feb", NetProfit = 43, Revenue = 42 });
+        _data.Add(new MyData { Category = "Mar", NetProfit = 112, Revenue = 23 });
+    }
+
+    public class MyData
+    {
+        public required string Category { get; set; }
+        
+        public int NetProfit { get; set; }
+ 
+        public int Revenue { get; set; }
+    }
+}

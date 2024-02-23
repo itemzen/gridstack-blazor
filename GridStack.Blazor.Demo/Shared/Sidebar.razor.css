@@ -2,7 +2,7 @@
     width: 200px;
     height: 100vh;
     background-color: white;
-    box-shadow: 4px 0 2px -2px #888;
+    box-shadow: 2px 0 2px -2px #888;
     padding: 0 18px;
     overflow-y: auto;
 }

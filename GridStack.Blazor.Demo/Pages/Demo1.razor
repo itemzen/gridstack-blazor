@@ -1,45 +1,216 @@
 ﻿@page "/"
+@using GridStack.Blazor.Models
 
 <div class="page">
 
     <div class="header">
-        <button onclick="@AddElementClicked">Add Element</button>
+        <button @onclick="@OnAddWidget">Add widget</button>
+        <button @onclick="@OnAddMultipleWidgets">Add 3 widgets</button>
+        <button @onclick="@OnToggleEnabledState">@(_isDisabled ? "Enable grid" : "Disable grid")</button>
+        <button @onclick="@OnCompact">Compact</button>
+        <button @onclick="@OnToggleColumns">@(_has6Columns ? "12 columns" : "6 columns")</button>
     </div>
 
-    <div class="dashboard-wrapper">
-        <div class="dashboard">
+    <div class="grid-wrapper">
+        <div class="@(_isDisabled ? "grid-disabled" : "grid-enabled")">
 
-            I am the dashboard
-            
-            <Dashboard
-                @ref="@_dashboard"
-                Options="@_dashboardOptions">
-                <Widget>Widget 1</Widget>
-                <Widget>Widget 2</Widget>
-            </Dashboard>
+            <GsGrid
+                @ref="@_grid"
+                Options="@_gsGridOptions"
+                OnAdded="@OnWidgetsAdded"
+                OnChange="@OnWidgetsChange"
+                OnDisable="@OnGridDisabled"
+                OnDragStart="@OnWidgetDragStart"
+                OnDrag="@OnWidgetDrag"
+                OnDragStop="@OnWidgetDragStop"
+                OnDropped="@OnWidgetDropped"
+                OnEnable="@OnGridEnabled"
+                OnResizeStart="@OnWidgetResizeStart"
+                OnResize="@OnWidgetResize"
+                OnResizeStop="@OnWidgetResizeStop">
+                <GsWidget Options="@_gsMarkupValueAppWidgetOptions">
+                    <ValueAppWidget />
+                </GsWidget>
+                <GsWidget Options="@_gsMarkupGraphAppWidgetOptions">
+                    <GraphAppWidget />
+                </GsWidget>
+            </GsGrid>
 
         </div>
-        </div>
+    </div>
 
 </div>
 
 @code{
 
-    private Dashboard _dashboard;
+    private static uint _count;
 
-    private readonly DashboardOptions _dashboardOptions = new()
+    private readonly GsGridOptions _gsGridOptions = new()
     {
-        AlwaysShowResizeHandle = false,
-        Animate = true,
-        //CellHeight = "20px"
-        //Column = 6
-        DisableDrag = false,
-        DisableResize = true
+        AlwaysShowResizeHandle = true,
+        Float = true,
+        MaxRow = 4,
+        MinRow = 2,
+        Margin = "20px"
     };
 
-    private async Task AddElementClicked()
+    private readonly GsWidgetOptions _gsMarkupValueAppWidgetOptions = new()
     {
-        await _dashboard.AddWidget();
+        AutoPosition = true,
+        NoResize = true,
+        MinW = 2,
+        MinH = 2
+    };
+    
+    private readonly GsWidgetOptions _gsMarkupGraphAppWidgetOptions = new()
+    {
+        AutoPosition = true,
+        NoResize = true,
+        MinW = 4,
+        MinH = 2
+    };
+    
+    
+    private readonly GsWidgetOptions _gsRuntimeWidgetOptions = new()
+    {
+        W = 1,
+        H = 1,
+        MaxH = 2,
+        MaxW = 2,
+        AutoPosition = true
+    };
+
+    private GsGrid _grid = null!;
+    private bool _isDisabled;
+    private bool _has6Columns;
+
+    private async Task OnAddWidget()
+    {
+        var widget = $"runtime-{_count++}";
+
+        var options = _gsRuntimeWidgetOptions with
+        {
+            Id = widget,
+            Content = $"<div>{widget}</div>"
+        };
+
+        await _grid.AddWidget(options);
     }
 
+    private async Task OnAddMultipleWidgets()
+    {
+        await _grid.BatchUpdate();
+
+        for (var i = 0; i < 3; i++)
+        {
+            await OnAddWidget();
+        }
+        
+        await _grid.BatchUpdate(false);
+    }
+
+    private async Task OnToggleEnabledState()
+    {
+        if (_isDisabled)
+        {
+            await _grid.Enable();
+        }
+        else
+        {
+            await _grid.Disable();
+        }
+
+        _isDisabled = !_isDisabled;
+    }
+
+    private async Task OnToggleColumns()
+    {
+        if (_has6Columns)
+        {
+            await _grid.SetColumnCount(12);
+        }
+        else
+        {
+            await _grid.SetColumnCount(6);
+        }
+
+        _has6Columns = !_has6Columns;
+    }
+
+    private async Task OnCompact()
+    {
+        await _grid.Compact(GsCompact.List);
+    }
+
+    private static void OnWidgetsAdded(GsWidgetListEventArgs args)
+    {
+        Console.WriteLine("added");
+
+        foreach (var widget in args.Widgets)
+        {
+            Console.WriteLine($"\t{widget}");
+        }
+    }
+
+    private static void OnWidgetsChange(GsWidgetListEventArgs args)
+    {
+        Console.WriteLine("change");
+
+        foreach (var widget in args.Widgets)
+        {
+            Console.WriteLine($"\t{widget}");
+        }
+    }
+
+    private static void OnGridDisabled()
+    {
+        Console.WriteLine("disabled");
+    }
+
+    private static void OnWidgetDragStart(GsWidgetEventArgs args)
+    {
+        Console.WriteLine("drag start");
+        Console.WriteLine($"\t{args.Widget}");
+    }
+
+    private static void OnWidgetDrag(GsWidgetEventArgs args)
+    {
+        Console.WriteLine("drag");
+        Console.WriteLine($"\t{args.Widget}");
+    }
+
+    private static void OnWidgetDragStop(GsWidgetEventArgs args)
+    {
+        Console.WriteLine("drag stop");
+        Console.WriteLine($"\t{args.Widget}");
+    }
+
+    private static void OnWidgetDropped(GsWidgetDroppedEventArgs args)
+    {
+        Console.WriteLine("dropped");
+        Console.WriteLine($"\t{args.PreviousWidget} => {args.NewWidget}");
+    }
+
+    private static void OnGridEnabled()
+    {
+        Console.WriteLine("enabled");
+    }
+
+    private static void OnWidgetResizeStart(GsWidgetEventArgs args)
+    {
+        Console.WriteLine("resize start");
+        Console.WriteLine($"\t{args.Widget}");
+    }
+
+    private static void OnWidgetResize(GsWidgetEventArgs args)
+    {
+        Console.WriteLine("resize");
+        Console.WriteLine($"\t{args.Widget}");
+    }
+
+    private static void OnWidgetResizeStop(GsWidgetEventArgs args)
+    {
+        Console.WriteLine("resize stop");
+        Console.WriteLine($"\t{args.Widget}");
+    }
 }

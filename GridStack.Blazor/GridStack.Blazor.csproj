@@ -45,9 +45,5 @@
         <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Internal\" />
-    </ItemGroup>
     
 </Project>
