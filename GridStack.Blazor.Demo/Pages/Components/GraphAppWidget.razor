@@ -22,7 +22,7 @@
 
 @code{
     
-    private List<MyData> _data = new();
+    private readonly List<MyData> _data = new();
     private ApexChartOptions<MyData> _options = new();
     
     protected override void OnInitialized()
@@ -43,12 +43,12 @@
         _data.Add(new MyData { Category = "Mar", NetProfit = 112, Revenue = 23 });
     }
 
-    public class MyData
+    public record MyData
     {
-        public required string Category { get; set; }
+        public required string Category { get; init; }
         
-        public int NetProfit { get; set; }
+        public int NetProfit { get; init; }
  
-        public int Revenue { get; set; }
+        public int Revenue { get; init; }
     }
 }

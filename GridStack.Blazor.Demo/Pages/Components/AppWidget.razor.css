@@ -1,0 +1,12 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.container .delete {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 1000;
+}

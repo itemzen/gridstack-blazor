@@ -17,6 +17,8 @@ public partial class GsGrid : IAsyncDisposable
 
     [Parameter] public string? Style { get; set; }
 
+    [Parameter] public EventCallback OnLoaded { get; set; }
+    
     [Parameter] public EventCallback<GsWidgetListEventArgs> OnAdded { get; set; }
 
     [Parameter] public EventCallback<GsWidgetListEventArgs> OnChange { get; set; }
@@ -55,6 +57,8 @@ public partial class GsGrid : IAsyncDisposable
 
             var interopRef = DotNetObjectReference.Create(this);
             _instance = await _module.InvokeAsync<IJSObjectReference>("init", Options, interopRef);
+
+            await OnLoaded.InvokeAsync();
         }
     }
 
@@ -189,7 +193,7 @@ public partial class GsGrid : IAsyncDisposable
         await _instance!.InvokeVoidAsync("movableById", id, val);
     }
 
-    public async Task RemoveWidget(string id, bool? removeDom = null, bool? triggerEvent = true)
+    public async Task RemoveWidget(string id, bool removeDom = true, bool triggerEvent = true)
     {
         await _instance!.InvokeVoidAsync("removeWidgetById", id, removeDom, triggerEvent);
     }

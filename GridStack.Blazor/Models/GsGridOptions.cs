@@ -30,7 +30,7 @@ public sealed record GsGridOptions
     /// If false gridstack will not initialize existing items, default true
     /// </summary>
     [JsonPropertyName("auto")] 
-    public bool? Auto { get; set; } = true;
+    public bool? Auto { get; set; }
 
     /// <summary>
     /// One cell height (default is 'auto'). Can be:
@@ -88,9 +88,14 @@ public sealed record GsGridOptions
     /// </summary>
     [JsonPropertyName("disableResize")]
     public bool? DisableResize { get; set; }
-    
-    // TODO - draggable
-    
+
+    /// <summary>
+    /// Allows to override UI draggable options.
+    /// (default: { handle?: '.grid-stack-item-content', appendTo?: 'body' })
+    /// </summary>
+    [JsonPropertyName("draggable")]
+    public GsDraggableOptions? Draggable { get; set; }
+
     // TODO - engineClass
     
     /// <summary>
@@ -214,4 +219,16 @@ public sealed record GsGridOptions
     // TODO - subGridOpts
     
     //  TODO - subGridDynamic
+}
+
+public sealed record GsDraggableOptions
+{
+    [JsonPropertyName("appendTo")]
+    public string? AppendTo { get; set; }
+    
+    [JsonPropertyName("handle")]
+    public string? Handle { get; set; }
+    
+    [JsonPropertyName("scroll")]
+    public bool? Scroll { get; set; }
 }

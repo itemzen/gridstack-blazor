@@ -1,0 +1,39 @@
+<div class="container">
+    @if (CanDelete)
+    {
+        <div class="delete">
+            <DeleteButton OnClick="@OnDeleteWidget"/>
+        </div>
+    }
+    <DynamicComponent Type="@GetWidgetType()" />
+</div>
+
+@code{
+
+    [Parameter] public required string Id { get; set; }
+
+    [Parameter] public bool CanDelete { get; set; }
+
+    [Parameter] public required WidgetType WidgetType { get; set; }
+
+    [Parameter] public EventCallback<string> OnDelete { get; set; }
+
+    private async Task OnDeleteWidget()
+    {
+        Console.WriteLine($"Delete {Id}");
+        
+        await OnDelete.InvokeAsync(Id);
+    }
+
+    private Type GetWidgetType()
+    {
+        const string ns = "GridStack.Blazor.Demo.Pages.Components";
+
+        return WidgetType switch
+        {
+            WidgetType.Value => Type.GetType($"{ns}.{nameof(ValueAppWidget)}")!,
+            WidgetType.Graph => Type.GetType($"{ns}.{nameof(GraphAppWidget)}")!,
+            _ => throw new NotImplementedException()
+        };
+    }
+}

@@ -1,9 +1,21 @@
 .page {
     display: grid;
+    height: 100vh;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
-    height: 100%;
     overflow: hidden;
+}
+
+.button {
+    background: white;
+    border-radius: 5px;
+    border: solid 1px lightgrey;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.button:hover {
+    background-color: #E5EEF9;
 }
 
 .header {
@@ -13,17 +25,19 @@
 }
 
 .grid-wrapper {
-    padding: 0 18px 18px 18px;
+    padding: 0 18px 18px;
     overflow-y: auto;
 }
 
 .grid-enabled {
     background-color: #F2F7FD;
     border-radius: 10px;
+    padding: 5px;
     border: dashed 1px #AAA;
 }
 
 .grid-disabled {
     background-color: #F2F7FD;
     border-radius: 10px;
+    padding: 5px;
 }

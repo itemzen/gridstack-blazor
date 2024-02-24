@@ -107,35 +107,50 @@ export function init(gridOptions, interopReference) {
 
     grid.makeWidgetById = (id) =>
     {
-        grid.makeWidget(document.getElementById(id));
+        grid.makeWidget(getWidgetById(id));
     }
 
     grid.movableById = (id, val) =>
     {
-        grid.movable(document.getElementById(id), val);
+        grid.movable(getWidgetById(id), val);
     }
 
     grid.removeWidgetById = (id, removeDOM, triggerEvent) =>
     {
-        grid.removeWidget(document.getElementById(id), removeDOM, triggerEvent);
+        grid.removeWidget(getWidgetById(id), removeDOM, triggerEvent);
     }
 
     grid.resizableById = (id, val) =>
     {
-        grid.resizable(document.getElementById(id), val);
+        grid.resizable(getWidgetById(id), val);
     }
 
     grid.resizeToContentById = (id, useAttrSize) => 
     {
-        grid.resizeToContent(document.getElementById(id), useAttrSize);
+        grid.resizeToContent(getWidgetById(id), useAttrSize);
     }
     
     grid.updateById = (id, opts) =>
     {
-        grid.update(document.getElementById(id), opts);
+        grid.update(getWidgetById(id), opts);
     }
     
     return grid;
+}
+
+/**
+ * Search the widget by id. Try the regular id attribute first,
+ * and perform a fallback to the gridstack provided 'gs-id' attribute.
+ */
+function getWidgetById(id) {
+
+    const el = document.getElementById(id);
+
+    if(el !== null) {
+        return el;
+    }
+    
+    return document.querySelector('[gs-id=' + id + ']');
 }
 
 /**

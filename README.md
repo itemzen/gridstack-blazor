@@ -1,6 +1,9 @@
 # GridStack.Blazor
 
-Blazor wrapper for the [gridstack.js](https://gridstackjs.com/) library, heavily based on the [BlazorGridStack](https://github.com/decelis/BlazorGridStack) wrapper.
+Blazor wrapper for the [gridstack.js](https://gridstackjs.com/) library.
+
+Credits go to the [BlazorGridStack](https://github.com/decelis/BlazorGridStack) project,
+on which this wrapper took inspiration.
 
 ## Installation
 
@@ -13,6 +16,10 @@ dotnet add package GridStack.Blazor
 The version of the nuget package matches the gridstack version against which the wrapper was created,
 including a version suffix indicating the wrapper release number. For example, `v10.1.0-r2` indicates the
 second release of the wrapper for version `10.1.0` of the gridstack library.
+
+Note that it is in general fine to use/include a different (minor) gridstack version in your project,
+especially bugfix releases, but if things don't work as expected it might be best to try and match 
+the gridstack version exactly.
 
 ### index.html
 
@@ -44,9 +51,12 @@ Add the following lines in `wwwroot/index.html`
 </body>
 ```
 
+Note that the `gridstack-extra.min.css` file is only needed if you intend to change the default number
+of grid columns from 12 to a lower value.
+
 ### Imports
 
-Add a reference to the relevant namespaces in the top-level `_Imports.razor` file
+Add a reference to the relevant namespaces in the top-level `_Imports.razor` file of your project
 
 ```razor
 @using GridStack.Blazor
@@ -55,16 +65,20 @@ Add a reference to the relevant namespaces in the top-level `_Imports.razor` fil
 
 ## Usage
 
-The wrapper adds two components: `GsGrid` and `GsWrapper`.
+The wrapper adds two components: `GsGrid` and `GsWidget`.
 
 ```razor
 <GsGrid Options="...">
-    <GsWidget Options="..." />
-    <GsWidget />
+    <GsWidget Options="...">
+        <div>The widget layout</div>
+    </GsWidget>
 </GsGrid>
 ```
 
-The demo project contains additional details.
+The widgets can be added to the grid using markup (as shown above), or programatically
+using the GsGrid API.
+
+The [demo project](https://github.com/itemzen/gridstack-blazor/tree/main/GridStack.Blazor.Demo) contains additional details.
 
 ## Acknowledgements
 

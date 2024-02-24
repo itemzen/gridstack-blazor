@@ -4,11 +4,11 @@
 <div class="page">
 
     <div class="header">
-        <button @onclick="@OnAddWidget">Add widget</button>
-        <button @onclick="@OnAddMultipleWidgets">Add 3 widgets</button>
-        <button @onclick="@OnToggleEnabledState">@(_isDisabled ? "Enable grid" : "Disable grid")</button>
-        <button @onclick="@OnCompact">Compact</button>
-        <button @onclick="@OnToggleColumns">@(_has6Columns ? "12 columns" : "6 columns")</button>
+        <button class="button" @onclick="@OnAddWidget">Add widget</button>
+        <button class="button" @onclick="@OnAddMultipleWidgets">Add 3 widgets</button>
+        <button class="button" @onclick="@OnToggleEnabledState">@(_isDisabled ? "Enable grid" : "Disable grid")</button>
+        <button class="button" @onclick="@OnCompact">Compact</button>
+        <button class="button" @onclick="@OnToggleColumns">@(_has6Columns ? "12 columns" : "6 columns")</button>
     </div>
 
     <div class="grid-wrapper">
@@ -17,6 +17,7 @@
             <GsGrid
                 @ref="@_grid"
                 Options="@_gsGridOptions"
+                OnLoaded="@OnGridLoaded"
                 OnAdded="@OnWidgetsAdded"
                 OnChange="@OnWidgetsChange"
                 OnDisable="@OnGridDisabled"
@@ -28,12 +29,20 @@
                 OnResizeStart="@OnWidgetResizeStart"
                 OnResize="@OnWidgetResize"
                 OnResizeStop="@OnWidgetResizeStop">
-                <GsWidget Options="@_gsMarkupValueAppWidgetOptions">
-                    <ValueAppWidget />
-                </GsWidget>
-                <GsWidget Options="@_gsMarkupGraphAppWidgetOptions">
-                    <GraphAppWidget />
-                </GsWidget>
+
+                @for (var i = 0; i < MarkupWidgets.Length; i++)
+                {
+                    var type = MarkupWidgets[i];
+                    var id = $"markup-{i}";
+
+                    <GsWidget Options="@GetWidgetOptions(type, id)">
+                        <AppWidget
+                            Id=@id
+                            CanDelete="@(!_isDisabled)"
+                            WidgetType=@type
+                            OnDelete="@OnDeleteWidget"/>
+                    </GsWidget>
+                }
             </GsGrid>
 
         </div>
@@ -43,17 +52,28 @@
 
 @code{
 
+    private static readonly WidgetType[] MarkupWidgets =
+    {
+        WidgetType.Value,
+        WidgetType.Graph,
+        WidgetType.Value
+    };
+
     private static uint _count;
 
     private readonly GsGridOptions _gsGridOptions = new()
     {
         AlwaysShowResizeHandle = true,
         Float = true,
-        MaxRow = 4,
+        MaxRow = 6,
         MinRow = 2,
-        Margin = "20px"
+        Margin = "10px",
+        Draggable = new GsDraggableOptions
+        {
+            Scroll = true
+        }
     };
-
+    
     private readonly GsWidgetOptions _gsMarkupValueAppWidgetOptions = new()
     {
         AutoPosition = true,
@@ -61,16 +81,19 @@
         MinW = 2,
         MinH = 2
     };
-    
+
     private readonly GsWidgetOptions _gsMarkupGraphAppWidgetOptions = new()
     {
         AutoPosition = true,
-        NoResize = true,
+        NoResize = false,
+        W = 4,
+        H = 4,
         MinW = 4,
-        MinH = 2
+        MinH = 2,
+        MaxW = 6,
+        MaxH = 4
     };
-    
-    
+
     private readonly GsWidgetOptions _gsRuntimeWidgetOptions = new()
     {
         W = 1,
@@ -84,14 +107,30 @@
     private bool _isDisabled;
     private bool _has6Columns;
 
+    private GsWidgetOptions GetWidgetOptions(WidgetType widgetType, string id)
+    {
+        return widgetType switch
+        {
+            WidgetType.Value => _gsMarkupValueAppWidgetOptions with
+            {
+                Id = id
+            },
+            WidgetType.Graph => _gsMarkupGraphAppWidgetOptions with
+            {
+                Id = id
+            },
+            _ => throw new NotImplementedException()
+        };
+    }
+
     private async Task OnAddWidget()
     {
-        var widget = $"runtime-{_count++}";
+        var id = $"runtime-{_count++}";
 
         var options = _gsRuntimeWidgetOptions with
         {
-            Id = widget,
-            Content = $"<div>{widget}</div>"
+            Id = id,
+            Content = $"<div>{id}</div>"
         };
 
         await _grid.AddWidget(options);
@@ -105,8 +144,14 @@
         {
             await OnAddWidget();
         }
-        
+
         await _grid.BatchUpdate(false);
+    }
+
+    private async Task OnDeleteWidget(string id)
+    {
+        await _grid.RemoveWidget(id);
+        await _grid.Compact();
     }
 
     private async Task OnToggleEnabledState()
@@ -119,8 +164,6 @@
         {
             await _grid.Disable();
         }
-
-        _isDisabled = !_isDisabled;
     }
 
     private async Task OnToggleColumns()
@@ -140,6 +183,12 @@
     private async Task OnCompact()
     {
         await _grid.Compact(GsCompact.List);
+    }
+
+    private async Task OnGridLoaded()
+    {
+        Console.WriteLine("loaded");
+        await _grid.Enable();
     }
 
     private static void OnWidgetsAdded(GsWidgetListEventArgs args)
@@ -162,9 +211,10 @@
         }
     }
 
-    private static void OnGridDisabled()
+    private void OnGridDisabled()
     {
         Console.WriteLine("disabled");
+        _isDisabled = true;
     }
 
     private static void OnWidgetDragStart(GsWidgetEventArgs args)
@@ -191,9 +241,10 @@
         Console.WriteLine($"\t{args.PreviousWidget} => {args.NewWidget}");
     }
 
-    private static void OnGridEnabled()
+    private void OnGridEnabled()
     {
         Console.WriteLine("enabled");
+        _isDisabled = false;
     }
 
     private static void OnWidgetResizeStart(GsWidgetEventArgs args)
@@ -213,4 +264,5 @@
         Console.WriteLine("resize stop");
         Console.WriteLine($"\t{args.Widget}");
     }
+
 }
