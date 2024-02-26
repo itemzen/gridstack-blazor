@@ -173,9 +173,9 @@ public partial class GsGrid : IAsyncDisposable
         await _instance!.InvokeVoidAsync("load", layout, addAndRemove);
     }
 
-    public async Task MakeWidget(string id)
+    public async Task<GsWidgetData> MakeWidget(string id)
     {
-        await _instance!.InvokeVoidAsync("makeWidgetById", id);
+        return await _instance!.InvokeAsync<GsWidgetData>("makeWidgetById", id);
     }
 
     public async Task SetMargin(uint value)

@@ -107,7 +107,7 @@ export function init(gridOptions, interopReference) {
 
     grid.makeWidgetById = (id) =>
     {
-        grid.makeWidget(getWidgetById(id));
+        return gsItemHTMLElementToWidgetData(grid.makeWidget(getWidgetById(id)));
     }
 
     grid.movableById = (id, val) =>
@@ -150,7 +150,7 @@ function getWidgetById(id) {
         return el;
     }
     
-    return document.querySelector('[gs-id=' + id + ']');
+    return document.querySelector('[gs-id=\'' + id + '\']');
 }
 
 /**

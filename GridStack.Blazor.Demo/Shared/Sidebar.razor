@@ -1,6 +1,7 @@
 <div class="sidebar">
     <div class="nav">
         <button @onclick="@OnDemo1">Demo 1</button>
+        <button @onclick="@OnDemo2">Demo 2</button>
     </div>
 </div>
 
@@ -11,5 +12,10 @@
     private void OnDemo1()
     {
         NavManager.NavigateTo("/");
+    }
+    
+    private void OnDemo2()
+    {
+        NavManager.NavigateTo("/demo2");
     }
 }
