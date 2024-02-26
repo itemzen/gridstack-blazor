@@ -71,9 +71,9 @@ public partial class GsGrid : IAsyncDisposable
         }
     }
 
-    public async Task AddWidget(GsWidgetOptions? options = null)
+    public async Task<GsWidgetData> AddWidget(GsWidgetOptions? options = null)
     {
-        await _instance!.InvokeAsync<GsWidget>("addWidgetForBlazor", options ?? new GsWidgetOptions());
+        return await _instance!.InvokeAsync<GsWidgetData>("addWidgetForBlazor", options ?? new GsWidgetOptions());
     }
 
     public async Task BatchUpdate(bool flag = true)
@@ -233,9 +233,9 @@ public partial class GsGrid : IAsyncDisposable
         await _instance!.InvokeVoidAsync("updateById", id, opts);
     }
 
-    public async Task<bool> WillItFit(uint x, uint y, uint width, uint height, bool autoPosition)
+    public async Task<bool> WillItFit(GsWidgetOptions opts)
     {
-        return await _instance!.InvokeAsync<bool>("willItFit", x, y, width, height, autoPosition);
+        return await _instance!.InvokeAsync<bool>("willItFit", opts);
     }
 
     [JSInvokable]

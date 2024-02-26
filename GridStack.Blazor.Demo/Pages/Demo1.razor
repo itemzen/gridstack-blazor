@@ -133,7 +133,17 @@
             Content = $"<div>{id}</div>"
         };
 
-        await _grid.AddWidget(options);
+        var willItFit = await _grid.WillItFit(options);
+
+        if (willItFit)
+        {
+            var widget = await _grid.AddWidget(options);   
+            Console.WriteLine($"runtime widget added {widget}");
+        }
+        else
+        {
+            Console.WriteLine("cannot fit additional widget");
+        }
     }
 
     private async Task OnAddMultipleWidgets()
