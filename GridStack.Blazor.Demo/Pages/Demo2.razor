@@ -84,6 +84,7 @@
             Console.WriteLine($"adding {widget.Id}");
                 
             var gridWidget = await _grid.MakeWidget(widget.Id);
+            
             widget.IsAdded = true;
 
             Console.WriteLine($"added widget {gridWidget}");

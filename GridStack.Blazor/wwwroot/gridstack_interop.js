@@ -161,11 +161,11 @@ function getWidgetById(id) {
  */
 function gsNodeToWidgetData(gsNode) {
     return {
-        // GridStackPosition: x, y, width, height
-        x: gsNode.x,
-        y: gsNode.y,
-        h: gsNode.h,
-        w: gsNode.w,
+        // GridStackPosition: x, y, w, h
+        x: gsNode.x || 0,
+        y: gsNode.y || 0,
+        h: gsNode.h || 1,
+        w: gsNode.w || 1,
         // GridStackWidget: value for `gs-id` stored on the widget
         id: gsNode.id,
         // GridStackNode: el = pointer back to HTML element
@@ -182,10 +182,10 @@ function gsNodeToWidgetData(gsNode) {
  */
 function gsItemHTMLElementToWidgetData(gsElement) {
     return {
-        x: parseInt(gsElement.getAttribute("gs-x")),
-        y: parseInt(gsElement.getAttribute("gs-y")),
-        h: parseInt(gsElement.getAttribute("gs-h")),
-        w: parseInt(gsElement.getAttribute("gs-w")),
+        x: parseInt(gsElement.getAttribute("gs-x")) || 0,
+        y: parseInt(gsElement.getAttribute("gs-y")) || 0,
+        h: parseInt(gsElement.getAttribute("gs-h")) || 1,
+        w: parseInt(gsElement.getAttribute("gs-w")) || 1,
         id: gsElement.getAttribute("gs-id"),
         content: gsElement.querySelector(".grid-stack-item-content").innerHTML,
         className: gsElement.className
