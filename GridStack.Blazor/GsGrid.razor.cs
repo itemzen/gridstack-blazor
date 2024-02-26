@@ -18,7 +18,7 @@ public partial class GsGrid : IAsyncDisposable
     [Parameter] public string? Style { get; set; }
 
     [Parameter] public EventCallback OnLoaded { get; set; }
-    
+
     [Parameter] public EventCallback<GsWidgetListEventArgs> OnAdded { get; set; }
 
     [Parameter] public EventCallback<GsWidgetListEventArgs> OnChange { get; set; }
@@ -45,6 +45,7 @@ public partial class GsGrid : IAsyncDisposable
 
     private IJSObjectReference? _module;
     private IJSObjectReference? _instance;
+    private DotNetObjectReference<GsGrid>? _interopRef;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -55,8 +56,8 @@ public partial class GsGrid : IAsyncDisposable
             _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>(
                 "import", $"./_content/{Assembly.GetExecutingAssembly().GetName().Name}/gridstack_interop.js");
 
-            var interopRef = DotNetObjectReference.Create(this);
-            _instance = await _module.InvokeAsync<IJSObjectReference>("init", Options, interopRef);
+            _interopRef = DotNetObjectReference.Create(this);
+            _instance = await _module.InvokeAsync<IJSObjectReference>("init", Options, _interopRef);
 
             await OnLoaded.InvokeAsync();
         }
@@ -64,6 +65,20 @@ public partial class GsGrid : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
+        GC.SuppressFinalize(this);
+
+        if (_interopRef != null)
+        {
+            _interopRef.Dispose();
+            _interopRef = null;
+        }
+
+        if (_instance != null)
+        {
+            await _instance.DisposeAsync();
+            _instance = null;
+        }
+
         if (_module != null)
         {
             await _module.DisposeAsync();
