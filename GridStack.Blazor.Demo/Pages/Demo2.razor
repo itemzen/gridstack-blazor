@@ -4,6 +4,7 @@
 
     <div class="header">
         <button class="button" @onclick="@OnAddWidget">Add widget</button>
+        <button class="button" @onclick="@OnUpdateWidget">Update widget</button>
     </div>
 
     <div class="grid-wrapper">
@@ -31,6 +32,10 @@
     {
         public required string Id { get; init; }
 
+        public uint? X { get; init; }
+        
+        public uint? Y { get; init; }
+        
         public uint W { get; init; }
 
         public uint H { get; init; }
@@ -52,6 +57,8 @@
         return new GsWidgetOptions
         {
             Id = widget.Id,
+            X = widget.X,
+            Y = widget.Y,
             W = widget.W,
             H = widget.H,
             AutoPosition = true
@@ -65,11 +72,31 @@
         var widget = new WidgetHolder
         {
             Id = Guid.NewGuid().ToString(),
+            X = 0,
+            Y = 0,
             W = 2,
             H = 1
         };
         
         _widgets.Add(widget);
+    }
+
+    private async Task OnUpdateWidget()
+    {
+        var widget = _widgets.FirstOrDefault();
+
+        if (widget == null)
+        {
+            return;
+        }
+
+        await _grid.Update(widget.Id, new GsWidgetOptions
+        {
+            X = widget.X,
+            Y = widget.Y,
+            W = 1,
+            H = 1
+        });
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

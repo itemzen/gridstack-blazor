@@ -129,10 +129,10 @@ export function init(gridOptions, interopReference) {
     {
         grid.resizeToContent(getWidgetById(id), useAttrSize);
     }
-    
+
     grid.updateById = (id, opts) =>
     {
-        grid.update(getWidgetById(id), opts);
+        grid.update(getWidgetById(id), normalizeOptions(opts));
     }
     
     return grid;
@@ -151,6 +151,33 @@ function getWidgetById(id) {
     }
     
     return document.querySelector('[gs-id=\'' + id + '\']');
+}
+
+/**
+ * Properties not explicitly set in C# are still passed as a null value to Javascript,
+ * as there is no such concept of 'undefined' in C#.
+ * In some cases, the behavior of the gridstack library differs between providing null
+ * or undefined. This function sets each option explicitly to undefined when passed as null,
+ * assuming it is unset. A string value can be set to the empty string as a workaround to trigger
+ * the 'non-undefined' behavior.
+ */
+function normalizeOptions(opts) {
+    return {
+        x: (opts.x === null) ? undefined : opts.x,
+        y: (opts.y === null) ? undefined : opts.y,
+        w: (opts.w === null) ? undefined : opts.w,
+        h: (opts.h === null) ? undefined : opts.h,
+        autoPosition: (opts.autoPosition === null) ? undefined : opts.autoPosition,
+        minW: (opts.minW === null) ? undefined : opts.minW,
+        maxW: (opts.maxW === null) ? undefined : opts.maxW,
+        minH: (opts.minH === null) ? undefined : opts.minH,
+        maxH: (opts.maxH === null) ? undefined : opts.maxH,
+        noResize: (opts.noResize === null) ? undefined : opts.noResize,
+        noMove: (opts.noMove === null) ? undefined : opts.noMove,
+        isLocked: (opts.isLocked === null) ? undefined : opts.isLocked,
+        id: (opts.id === null) ? undefined : opts.id,
+        content: (opts.content === null) ? undefined : opts.content
+    };
 }
 
 /**
