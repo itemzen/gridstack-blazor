@@ -2,12 +2,11 @@ using System.ComponentModel;
 using System.Reflection;
 using GridStack.Blazor.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
 namespace GridStack.Blazor;
 
-public partial class GsGrid : IAsyncDisposable
+public sealed partial class GsGrid : IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
@@ -65,8 +64,6 @@ public partial class GsGrid : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        GC.SuppressFinalize(this);
-
         if (_interopRef != null)
         {
             _interopRef.Dispose();

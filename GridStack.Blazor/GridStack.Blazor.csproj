@@ -8,7 +8,7 @@
         <VersionPrefix>10.1.0</VersionPrefix>
         <Authors>Itemzen</Authors>
         <Copyright>2024 by Itemzen</Copyright>
-        <PackageId>GridStack.Blazor</PackageId>
+        <PackageId>Itemzen.GridStack.Blazor</PackageId>
         <PublishRelease>true</PublishRelease>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <OutputType>Library</OutputType>

@@ -1,4 +1,4 @@
-# GridStack.Blazor
+# Itemzen.GridStack.Blazor
 
 Blazor wrapper for the [gridstack.js](https://gridstackjs.com/) library.
 
@@ -10,7 +10,7 @@ on which this wrapper took inspiration.
 ### NuGet
 
 ```bash
-dotnet add package GridStack.Blazor
+dotnet add package Itemzen.GridStack.Blazor
 ```
 
 The version of the nuget package matches the gridstack version against which the wrapper was created,
