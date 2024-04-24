@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace GridStack.Blazor.Models;
+namespace GridStack.Blazor;
 
 /**
  * Any property on GridStackWidget can be used as an option

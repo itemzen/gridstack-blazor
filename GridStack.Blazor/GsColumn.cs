@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace GridStack.Blazor.Models;
+namespace GridStack.Blazor;
 
 public enum GsColumn
 {

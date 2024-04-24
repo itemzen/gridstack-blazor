@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace GridStack.Blazor.Models;
+namespace GridStack.Blazor;
 
 public sealed record GsCoordinate
 {

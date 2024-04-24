@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.Reflection;
-using GridStack.Blazor.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -46,6 +45,8 @@ public sealed partial class GsGrid : IAsyncDisposable
     private IJSObjectReference? _instance;
     private DotNetObjectReference<GsGrid>? _interopRef;
 
+    private const string PackageName = "Itemzen.GridStack.Blazor";
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -53,7 +54,7 @@ public sealed partial class GsGrid : IAsyncDisposable
         if (firstRender)
         {
             _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", $"./_content/{Assembly.GetExecutingAssembly().GetName().Name}/gridstack_interop.js");
+                "import", $"./_content/{PackageName}/gridstack_interop.js");
 
             _interopRef = DotNetObjectReference.Create(this);
             _instance = await _module.InvokeAsync<IJSObjectReference>("init", Options, _interopRef);
@@ -253,13 +254,13 @@ public sealed partial class GsGrid : IAsyncDisposable
     [JSInvokable]
     public Task AddedFired(GsWidgetData[] widgets)
     {
-        return OnAdded.InvokeAsync(GsWidgetListEventArgs.New(widgets));
+        return OnAdded.InvokeAsync(new GsWidgetListEventArgs(widgets));
     }
 
     [JSInvokable]
     public Task ChangeFired(GsWidgetData[] widgets)
     {
-        return OnChange.InvokeAsync(GsWidgetListEventArgs.New(widgets));
+        return OnChange.InvokeAsync(new GsWidgetListEventArgs(widgets));
     }
 
     [JSInvokable]
@@ -271,25 +272,25 @@ public sealed partial class GsGrid : IAsyncDisposable
     [JSInvokable]
     public Task DragStartFired(GsWidgetData widget)
     {
-        return OnDragStart.InvokeAsync(GsWidgetEventArgs.New(widget));
+        return OnDragStart.InvokeAsync(new GsWidgetEventArgs(widget));
     }
 
     [JSInvokable]
     public Task DragFired(GsWidgetData widget)
     {
-        return OnDrag.InvokeAsync(GsWidgetEventArgs.New(widget));
+        return OnDrag.InvokeAsync(new GsWidgetEventArgs(widget));
     }
 
     [JSInvokable]
     public Task DragStopFired(GsWidgetData widget)
     {
-        return OnDragStop.InvokeAsync(GsWidgetEventArgs.New(widget));
+        return OnDragStop.InvokeAsync(new GsWidgetEventArgs(widget));
     }
 
     [JSInvokable]
     public Task DroppedFired(GsWidgetData previousWidget, GsWidgetData newWidget)
     {
-        return OnDropped.InvokeAsync(GsWidgetDroppedEventArgs.New(previousWidget, newWidget));
+        return OnDropped.InvokeAsync(new GsWidgetDroppedEventArgs(previousWidget, newWidget));
     }
 
     [JSInvokable]
@@ -301,25 +302,25 @@ public sealed partial class GsGrid : IAsyncDisposable
     [JSInvokable]
     public Task RemovedFired(GsWidgetData[] widgets)
     {
-        return OnRemoved.InvokeAsync(GsWidgetListEventArgs.New(widgets));
+        return OnRemoved.InvokeAsync(new GsWidgetListEventArgs(widgets));
     }
 
     [JSInvokable]
     public Task ResizeStartFired(GsWidgetData widget)
     {
-        return OnResizeStart.InvokeAsync(GsWidgetEventArgs.New(widget));
+        return OnResizeStart.InvokeAsync(new GsWidgetEventArgs(widget));
     }
 
     [JSInvokable]
     public Task ResizeFired(GsWidgetData widget)
     {
-        return OnResize.InvokeAsync(GsWidgetEventArgs.New(widget));
+        return OnResize.InvokeAsync(new GsWidgetEventArgs(widget));
     }
 
     [JSInvokable]
     public Task ResizeStopFired(GsWidgetData widget)
     {
-        return OnResizeStop.InvokeAsync(GsWidgetEventArgs.New(widget));
+        return OnResizeStop.InvokeAsync(new GsWidgetEventArgs(widget));
     }
 
     private static string EnumToString<T>(T type) where T : struct, IConvertible

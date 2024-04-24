@@ -1,4 +1,3 @@
-using GridStack.Blazor.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace GridStack.Blazor;

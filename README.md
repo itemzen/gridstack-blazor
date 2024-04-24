@@ -3,7 +3,7 @@
 Blazor wrapper for the [gridstack.js](https://gridstackjs.com/) library.
 
 Credits go to the [BlazorGridStack](https://github.com/decelis/BlazorGridStack) project,
-on which this wrapper took inspiration.
+from which this wrapper took inspiration.
 
 ## Installation
 
@@ -56,11 +56,10 @@ of grid columns from 12 to a lower value.
 
 ### Imports
 
-Add a reference to the relevant namespaces in the top-level `_Imports.razor` file of your project
+Add a reference to the relevant namespace in the top-level `_Imports.razor` file of your project
 
 ```razor
 @using GridStack.Blazor
-@using GridStack.Blazor.Models
 ```
 
 ## Usage
