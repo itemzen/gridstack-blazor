@@ -27,12 +27,10 @@
 
     private Type GetWidgetType()
     {
-        const string ns = "GridStack.Blazor.Demo.Pages.Components";
-
         return WidgetType switch
         {
-            WidgetType.Value => Type.GetType($"{ns}.{nameof(ValueAppWidget)}")!,
-            WidgetType.Graph => Type.GetType($"{ns}.{nameof(GraphAppWidget)}")!,
+            WidgetType.Value => typeof(ValueAppWidget),
+            WidgetType.Graph => typeof(GraphAppWidget),
             _ => throw new NotImplementedException()
         };
     }

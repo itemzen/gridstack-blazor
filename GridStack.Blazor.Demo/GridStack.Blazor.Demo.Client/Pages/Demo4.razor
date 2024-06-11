@@ -1,7 +1,12 @@
-@page "/demo2"
+@page "/demo4"
+
+<PageTitle>Demo 4: Responsive with Breakpoints</PageTitle>
 
 <div class="page">
-
+    <div class="title">
+        <h3>Demo 4: Responsive with Breakpoints</h3>
+    </div>
+    
     <div class="header">
         <button class="button" @onclick="@OnAddWidget">Add widget</button>
         <button class="button" @onclick="@OnUpdateWidget">Update widget</button>
@@ -33,9 +38,9 @@
         public required string Id { get; init; }
 
         public uint? X { get; init; }
-        
+
         public uint? Y { get; init; }
-        
+
         public uint W { get; init; }
 
         public uint H { get; init; }
@@ -49,7 +54,35 @@
     {
         Float = true,
         MaxRow = 6,
-        MinRow = 1
+        MinRow = 1,
+        ColumnOpts = new GsResponsive()
+        {
+            BreakpointForWindow = false,
+            Breakpoints =
+            [
+                new GsBreakpoint()
+                {
+                    W = 1200,
+                    C = 6,
+                },
+                new GsBreakpoint()
+                {
+                    W = 900,
+                    C = 4,
+                },
+                new GsBreakpoint()
+                {
+                    W = 600,
+                    C = 3,
+                },
+                new GsBreakpoint()
+                {
+                    W = 400,
+                    C = 1,
+                    Layout = GsColumn.List
+                }
+            ]
+        }
     };
 
     private static GsWidgetOptions ToOptions(WidgetHolder widget)
@@ -66,7 +99,7 @@
     }
 
     private GsGrid _grid = null!;
-    
+
     private void OnAddWidget()
     {
         var widget = new WidgetHolder
@@ -77,7 +110,7 @@
             W = 2,
             H = 1
         };
-        
+
         _widgets.Add(widget);
     }
 
@@ -109,12 +142,13 @@
             }
 
             Console.WriteLine($"adding {widget.Id}");
-                
+
             var gridWidget = await _grid.MakeWidget(widget.Id);
-            
+
             widget.IsAdded = true;
 
             Console.WriteLine($"added widget {gridWidget}");
         }
     }
+
 }
