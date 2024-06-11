@@ -68,7 +68,11 @@ public sealed record GsGridOptions
     [JsonPropertyName("column")]
     public object? Column { get; set; }
     
-    // TODO - columnOpts
+    /// <summary>
+    /// Responsive column layout for width:column behavior. See <see cref="GsResponsive"/>.
+    /// </summary>
+    [JsonPropertyName("columnOpts")]
+    public GsResponsive? ColumnOpts { get; set; }
     
     /// <summary>
     /// Additional class on top of '.grid-stack' (which is required for our CSS) to differentiate this instance.
