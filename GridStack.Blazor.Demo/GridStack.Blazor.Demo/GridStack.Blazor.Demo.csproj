@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Gridstack.Blazor.Demo.Client\Gridstack.Blazor.Demo.Client.csproj" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.5"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.6" />
     </ItemGroup>
 
     <ItemGroup>
