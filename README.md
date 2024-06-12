@@ -15,7 +15,7 @@ dotnet add package Itemzen.GridStack.Blazor
 
 The version of the nuget package matches the gridstack version against which the wrapper was created,
 including a version suffix indicating the wrapper release number. For example, `v10.1.0-r2` indicates the
-second release of the wrapper for version `10.1.0` of the gridstack library.
+second release of the wrapper for version `10.2.0` of the gridstack library.
 
 Note that it is in general fine to use/include a different (minor) gridstack version in your project,
 especially bugfix releases, but if things don't work as expected it might be best to try and match 
@@ -81,4 +81,4 @@ The [demo project](https://github.com/itemzen/gridstack-blazor/tree/main/GridSta
 
 ## Acknowledgements
 
-Brought to you by the [itemzen](https://itemzen.com) team.
+Brought to you by the [itemzen](https://itemzen.com) team, with contributions from: [@cxjke](https://github.com/cxjke)
