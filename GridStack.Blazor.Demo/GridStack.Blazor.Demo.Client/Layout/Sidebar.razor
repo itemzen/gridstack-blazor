@@ -2,6 +2,8 @@
     <div class="nav">
         <button @onclick="@OnDemo1">Demo 1</button>
         <button @onclick="@OnDemo2">Demo 2</button>
+        <button @onclick="@OnDemo3">Demo 3 (Responsive)</button>
+        <button @onclick="@OnDemo4">Demo 4 (Responsive with Breakpoints)</button>
     </div>
 </div>
 
@@ -17,5 +19,15 @@
     private void OnDemo2()
     {
         NavManager.NavigateTo("/demo2");
+    }
+    
+    private void OnDemo3()
+    {
+        NavManager.NavigateTo("/demo3");
+    }
+    
+    private void OnDemo4()
+    {
+        NavManager.NavigateTo("/demo4");
     }
 }

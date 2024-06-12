@@ -1,0 +1,125 @@
+@page "/demo2"
+
+<PageTitle>Demo 2: Runtime Markup Components</PageTitle>
+
+<div class="page">
+    <div class="title">
+        <h3>Demo 2: Runtime Markup Components</h3>
+    </div>
+
+    <div class="header">
+        <button class="button" @onclick="@OnAddWidget">Add widget</button>
+        <button class="button" @onclick="@OnUpdateWidget">Update widget</button>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid-enabled">
+
+            <GsGrid @ref="@_grid" Options="@_gsGridOptions">
+
+                @foreach (var widget in _widgets)
+                {
+                    <GsWidget Options="@ToOptions(widget)">
+                        @widget.Id
+                    </GsWidget>
+                }
+
+            </GsGrid>
+
+        </div>
+    </div>
+
+</div>
+
+@code {
+
+    private sealed record WidgetHolder
+    {
+        public required string Id { get; init; }
+
+        public uint? X { get; init; }
+        
+        public uint? Y { get; init; }
+        
+        public uint W { get; init; }
+
+        public uint H { get; init; }
+
+        public bool IsAdded { get; set; }
+    }
+
+    private readonly List<WidgetHolder> _widgets = new();
+
+    private readonly GsGridOptions _gsGridOptions = new()
+    {
+        Float = true,
+        MaxRow = 6,
+        MinRow = 1
+    };
+
+    private static GsWidgetOptions ToOptions(WidgetHolder widget)
+    {
+        return new GsWidgetOptions
+        {
+            Id = widget.Id,
+            X = widget.X,
+            Y = widget.Y,
+            W = widget.W,
+            H = widget.H,
+            AutoPosition = true
+        };
+    }
+
+    private GsGrid _grid = null!;
+    
+    private void OnAddWidget()
+    {
+        var widget = new WidgetHolder
+        {
+            Id = Guid.NewGuid().ToString(),
+            X = 0,
+            Y = 0,
+            W = 2,
+            H = 1
+        };
+        
+        _widgets.Add(widget);
+    }
+
+    private async Task OnUpdateWidget()
+    {
+        var widget = _widgets.FirstOrDefault();
+
+        if (widget == null)
+        {
+            return;
+        }
+
+        await _grid.Update(widget.Id, new GsWidgetOptions
+        {
+            X = widget.X,
+            Y = widget.Y,
+            W = 1,
+            H = 1
+        });
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        foreach (var widget in _widgets)
+        {
+            if (widget.IsAdded)
+            {
+                continue;
+            }
+
+            Console.WriteLine($"adding {widget.Id}");
+                
+            var gridWidget = await _grid.MakeWidget(widget.Id);
+            
+            widget.IsAdded = true;
+
+            Console.WriteLine($"added widget {gridWidget}");
+        }
+    }
+}

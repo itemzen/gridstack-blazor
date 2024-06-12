@@ -2,14 +2,16 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridStack.Blazor", "GridStack.Blazor\GridStack.Blazor.csproj", "{EE47F902-692A-4FC4-89A2-F76A2EE60069}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridStack.Blazor.Demo", "GridStack.Blazor.Demo\GridStack.Blazor.Demo.csproj", "{6283E4C6-A496-4E72-B6D4-76F077D36643}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Files", "_Files", "{1A376D21-335E-4D44-9CD8-4E584BB61359}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
 		README.md = README.md
 		pack.sh = pack.sh
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridStack.Blazor.Demo", "GridStack.Blazor.Demo\GridStack.Blazor.Demo\GridStack.Blazor.Demo.csproj", "{139CF79F-A568-4CA4-B86F-2C3ABE7538DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridStack.Blazor.Demo.Client", "GridStack.Blazor.Demo\GridStack.Blazor.Demo.Client\GridStack.Blazor.Demo.Client.csproj", "{C64B29E4-C470-41F5-8F2F-3CFC50CB7F6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +23,13 @@ Global
 		{EE47F902-692A-4FC4-89A2-F76A2EE60069}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE47F902-692A-4FC4-89A2-F76A2EE60069}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE47F902-692A-4FC4-89A2-F76A2EE60069}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6283E4C6-A496-4E72-B6D4-76F077D36643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6283E4C6-A496-4E72-B6D4-76F077D36643}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6283E4C6-A496-4E72-B6D4-76F077D36643}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6283E4C6-A496-4E72-B6D4-76F077D36643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{139CF79F-A568-4CA4-B86F-2C3ABE7538DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{139CF79F-A568-4CA4-B86F-2C3ABE7538DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{139CF79F-A568-4CA4-B86F-2C3ABE7538DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{139CF79F-A568-4CA4-B86F-2C3ABE7538DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C64B29E4-C470-41F5-8F2F-3CFC50CB7F6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C64B29E4-C470-41F5-8F2F-3CFC50CB7F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C64B29E4-C470-41F5-8F2F-3CFC50CB7F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C64B29E4-C470-41F5-8F2F-3CFC50CB7F6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
