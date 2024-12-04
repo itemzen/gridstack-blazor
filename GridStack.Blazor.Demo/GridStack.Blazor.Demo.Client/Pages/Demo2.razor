@@ -1,4 +1,5 @@
 @page "/demo2"
+@using GridStack.Blazor.Demo.Client.Components
 
 <PageTitle>Demo 2: Runtime Markup Components</PageTitle>
 
@@ -19,8 +20,12 @@
 
                 @foreach (var widget in _widgets)
                 {
-                    <GsWidget Options="@ToOptions(widget)">
-                        @widget.Id
+                    <GsWidget @key="widget.Id" Options="@ToOptions(widget)">
+                          <AppWidget
+                                Id=@widget.Id
+                                CanDelete="true"
+                                WidgetType="@WidgetType.Value"
+                                OnDelete="@OnDeleteWidget"/>
                     </GsWidget>
                 }
 
@@ -77,13 +82,18 @@
         var widget = new WidgetHolder
         {
             Id = Guid.NewGuid().ToString(),
-            X = 0,
-            Y = 0,
             W = 2,
             H = 1
         };
         
         _widgets.Add(widget);
+    }
+
+    private async Task OnDeleteWidget(string id)
+    {
+        _widgets.RemoveAll(w => w.Id == id);
+
+        await _grid.RemoveWidget(id , removeDom:false);
     }
 
     private async Task OnUpdateWidget()
