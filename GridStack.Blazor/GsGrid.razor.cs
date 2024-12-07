@@ -151,9 +151,9 @@ public sealed partial class GsGrid : IAsyncDisposable
         return await _instance!.InvokeAsync<bool>("float");
     }
 
-    public async Task<int> GetCellHeight()
+    public async Task<double> GetCellHeight()
     {
-        return await _instance!.InvokeAsync<int>("getCellHeight");
+        return await _instance!.InvokeAsync<double>("getCellHeight");
     }
 
     public async Task<GsCoordinate> GetCellFromPixel(uint top, uint left, bool? useOffset = null)
